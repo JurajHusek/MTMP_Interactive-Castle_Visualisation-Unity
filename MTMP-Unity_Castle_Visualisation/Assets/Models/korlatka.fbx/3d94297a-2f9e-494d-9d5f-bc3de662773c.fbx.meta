@@ -3,7 +3,37 @@ guid: bd67fc7da5742cb4d8e095264f039c3c
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BackColor
+    second: {fileID: 2100000, guid: b8e32536564131d48932d9fec81963e1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: FrontColor
+    second: {fileID: 2100000, guid: b77b3a80207c21a499c3ded0102af1b4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: OLD_WALL_130
+    second: {fileID: 2100000, guid: de4382165efd73c4db2af195cce4d487, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Old_Stone_Wall_01
+    second: {fileID: 2100000, guid: 33774772ec4c34348b22636f0be98b24, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ROCKY_GROUND_01_250cm_Color_2k
+    second: {fileID: 2100000, guid: 24442f66639f94d4fa963f6ee444af91, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: old_dirty_stone_wall
+    second: {fileID: 2100000, guid: e5992ac337d22684cb4e5824afc101c4, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
