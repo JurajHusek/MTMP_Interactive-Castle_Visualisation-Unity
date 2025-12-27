@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
@@ -7,7 +7,7 @@ public class CameraController : MonoBehaviour
     [Header("Zoom")]
     public float zoomSpeed = 10f;
     public float minZoom = 5f;
-    public float maxZoom = 40f;
+    public float maxZoom = 100f;
     [Header("Movement")]
     public float moveSpeed = 10f;
     public float moveShiftBoost = 2f;
@@ -25,29 +25,54 @@ public class CameraController : MonoBehaviour
     public GameObject[] targetControlElements;
     public GameObject lockButton;
     public GameObject unlockButton;
-    void Start()
+    [Header("Camera Defaults")]
+    [SerializeField] private float defaultFOV = 60f;
+    [Header("Auto Move Offset")]
+    public Vector3 cameraOffset = new Vector3(0, 5, -10);
+
+    private void Awake()
     {
         if (Camera.main != null)
-            targetZoom = Camera.main.fieldOfView;
+        {
+            Camera.main.fieldOfView = defaultFOV;
+            targetZoom = defaultFOV;
+        }
 
         targetPosition = transform.position;
+    }
+
+    void Start()
+    {
         lastTarget = transform;
+
         lockButton.SetActive(false);
         unlockButton.SetActive(false);
     }
 
+
     void Update()
     {
         HandleAutoCameraMove();
-        Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, targetZoom, Time.deltaTime * smoothing);
-        if (unlockedCamera)
+
+        if (unlockedCamera && Camera.main != null)
         {
+            Camera.main.fieldOfView = Mathf.Lerp(
+                Camera.main.fieldOfView,
+                targetZoom,
+                Time.deltaTime * smoothing
+            );
+
             HandleMouse();
             HandleMovement();
             HandleRotation();
-            transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * smoothing);
+            transform.position = Vector3.Lerp(
+                transform.position,
+                targetPosition,
+                Time.deltaTime * smoothing
+            );
         }
     }
+
 
     private void HandleMouse()
     {
@@ -131,35 +156,33 @@ public class CameraController : MonoBehaviour
     {
         if (moveTarget == null)
             return;
+
+        Vector3 desiredPosition = moveTarget.position + cameraOffset;
+
         transform.position = Vector3.MoveTowards(
             transform.position,
-            moveTarget.position,
+            desiredPosition,
             moveToSpeed * Time.deltaTime
         );
 
-        transform.rotation = Quaternion.RotateTowards(
-            transform.rotation,
-            moveTarget.rotation,
-            rotateToSpeed * Time.deltaTime
-        );
-
-        if (Vector3.Distance(transform.position, moveTarget.position) < 0.01f &&
-            Quaternion.Angle(transform.rotation, moveTarget.rotation) < 0.5f)
+        if (Vector3.Distance(transform.position, desiredPosition) < 0.05f)
         {
-            transform.position = moveTarget.position;
-            transform.rotation = moveTarget.rotation;
+            transform.position = desiredPosition;
+
+            // 🔑 zosúladenie s manuálnym pohybom
+            targetPosition = transform.position;
 
             moveTarget = null;
-            targetPosition = transform.position;
         }
     }
+
+
 
     public void ManageCameraLock(bool lockStatus)
     {
         unlockedCamera = lockStatus;
         if (unlockedCamera == false)
         {
-            targetZoom = 60f;
             StartCameraMove(lastTarget.gameObject);
             unlockButton.SetActive(true);
             lockButton.SetActive(false);

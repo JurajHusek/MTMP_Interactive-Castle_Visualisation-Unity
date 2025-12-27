@@ -64,9 +64,11 @@
     <Compile Include="Assets\Scripts\ShowroomManager.cs" />
     <Compile Include="Assets\Scripts\UiManager.cs" />
     <Compile Include="Assets\Scripts\LightingPreset.cs" />
+    <Compile Include="Assets\Scripts\WaypointMarker.cs" />
     <Compile Include="Assets\Scripts\CameraController.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\WaypointSystem\Demo\README.txt" />
     <None Include="Assets\laxer tree pkg\README.txt" />
   </ItemGroup>
   <ItemGroup>
