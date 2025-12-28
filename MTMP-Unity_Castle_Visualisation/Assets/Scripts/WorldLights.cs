@@ -1,23 +1,36 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class LightingManager : MonoBehaviour
 {
-    [SerializeField] private Light DirectionalLight;
-    [SerializeField] private LightingPreset Preset;
+    public Light DirectionalLight;
+    public LightingPreset Preset;
     [SerializeField, Range(0, 180)] public float TimeOfDay;
+    public Slider timeSlider;
 
-    private void Update()
+    private void Start()
     {
-        if (Preset == null)
-            return;
-
-        if (Application.isPlaying)
-        {
-            TimeOfDay %= 180;
-            UpdateLighting(TimeOfDay / 180f);
-        }
+        timeSlider.minValue = 0f;
+        timeSlider.maxValue = 180f;
+        timeSlider.value = TimeOfDay;
+        timeSlider.onValueChanged.AddListener(OnSliderValueChanged);
     }
 
+    private void OnDestroy()
+    {
+        timeSlider.onValueChanged.RemoveListener(OnSliderValueChanged);
+    }
+
+    private void OnSliderValueChanged(float value)
+    {
+        SetTimeOfDay(value);
+    }
+
+    public void SetTimeOfDay(float value)
+    {
+        TimeOfDay = value%180;
+        UpdateLighting(TimeOfDay / 180f);
+    }
     private void UpdateLighting(float timePercent)
     {
         RenderSettings.ambientLight = Preset.AmbientColor.Evaluate(timePercent);

@@ -1,31 +1,25 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 [ExecuteAlways]
 public class WaypointMarker : MonoBehaviour
 {
-    [Header("Target")]
+    public ShowroomManager sm;
     [SerializeField] private Transform target;
-
-    [Header("UI")]
     [SerializeField] private Text label;
     [SerializeField] private Image icon;
-
-
-    [Header("Text")]
     [SerializeField] private string labelText;
-
-    [Header("Settings")]
-    [SerializeField] private Vector3 worldOffset = Vector3.up;
     [SerializeField] private bool hideWhenOffscreen = true;
-
     private Camera cam;
     private RectTransform rect;
     private Canvas canvas;
-    [Header("Smoothing")]
     [SerializeField] private bool smoothMovement = true;
     [SerializeField] private float smoothSpeed = 10f;
-
+    public string jsonKey;
+    public GameObject infoPanel;
+    public Text infoPanelTitle;
+    public Text infoPanelText;
     private Vector2 currentAnchoredPos;
     private Vector2 targetAnchoredPos;
 
@@ -116,13 +110,20 @@ public class WaypointMarker : MonoBehaviour
         if (label != null)
             label.text = labelText;
     }
-
-    // --- Public API (volite¾né) ---
     public void SetTarget(Transform newTarget) => target = newTarget;
 
     public void SetText(string text)
     {
         labelText = text;
         ApplyLabelText();
+    }
+    public void clickMarker()
+    {
+        infoPanelTitle.text = labelText;
+        if (sm.data.TryGetValue(jsonKey, out string value))
+        {
+            infoPanelText.text = value;
+            infoPanel.SetActive(true);
+        }
     }
 }

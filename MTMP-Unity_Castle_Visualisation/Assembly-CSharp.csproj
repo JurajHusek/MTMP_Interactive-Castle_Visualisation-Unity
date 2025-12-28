@@ -63,6 +63,7 @@
     <Compile Include="Assets\Scripts\WorldLights.cs" />
     <Compile Include="Assets\Scripts\ShowroomManager.cs" />
     <Compile Include="Assets\Scripts\UiManager.cs" />
+    <Compile Include="Assets\Scripts\MarkerInfo.cs" />
     <Compile Include="Assets\Scripts\LightingPreset.cs" />
     <Compile Include="Assets\Scripts\WaypointMarker.cs" />
     <Compile Include="Assets\Scripts\CameraController.cs" />
@@ -70,6 +71,7 @@
   <ItemGroup>
     <None Include="Assets\WaypointSystem\Demo\README.txt" />
     <None Include="Assets\laxer tree pkg\README.txt" />
+    <None Include="Assets\info\history.txt" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
