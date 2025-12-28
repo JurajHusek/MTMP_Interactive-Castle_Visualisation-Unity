@@ -2,36 +2,42 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-[ExecuteAlways]
+[ExecuteAlways] // allows marker updates also in edit mode of Unity
 public class WaypointMarker : MonoBehaviour
 {
-    public ShowroomManager sm;
-    [SerializeField] private Transform target;
-    [SerializeField] private Text label;
-    [SerializeField] private Image icon;
-    [SerializeField] private string labelText;
-    [SerializeField] private bool hideWhenOffscreen = true;
+    public ShowroomManager sm; // reference to manager holding json data
+    public Transform target; // world-space target the marker follows
+    // ui elements of the marker
+    public Text label;
+    public Image icon;
+    public string labelText;
+    public bool hideWhenOffscreen = true;
+    // cached references
     private Camera cam;
     private RectTransform rect;
     private Canvas canvas;
-    [SerializeField] private bool smoothMovement = true;
-    [SerializeField] private float smoothSpeed = 10f;
+    public bool smoothMovement = true;
+    public float smoothSpeed = 10f;
+    // key used to fetch text from dictionary made from json data
     public string jsonKey;
+    // info panel shown after clicking marker
     public GameObject infoPanel;
     public Text infoPanelTitle;
     public Text infoPanelText;
+    // internal positions for interpolation
     private Vector2 currentAnchoredPos;
     private Vector2 targetAnchoredPos;
 
     private void Awake()
     {
-        Init();
-        ApplyLabelText();
+        Init(); // initializes camera and canvas
+        ApplyLabelText(); // applies marker text
     }
 
 #if UNITY_EDITOR
     private void OnValidate()
     {
+        // keeps preview updated in inspector
         ApplyLabelText();
         Init();
     }
@@ -39,45 +45,34 @@ public class WaypointMarker : MonoBehaviour
 
     private void Init()
     {
+        // caches rect and parent canvas
         rect = GetComponent<RectTransform>();
         canvas = GetComponentInParent<Canvas>();
-
-        if (canvas == null)
+        // selects correct camera based on canvas mode
+        if (canvas.renderMode == RenderMode.ScreenSpaceCamera && canvas.worldCamera != null)
         {
-            Debug.LogError("WaypointMarker must be a child of a Canvas!", this);
-            return;
+            cam = canvas.worldCamera;
         }
-
-        cam = canvas.renderMode == RenderMode.ScreenSpaceCamera
-            ? canvas.worldCamera
-            : Camera.main;
-
-        if (label == null)
-            Debug.LogWarning("WaypointMarker: Label not assigned", this);
+        else
+        {
+            cam = Camera.main;
+        }
     }
 
     private void LateUpdate()
     {
         if (target == null || cam == null || canvas == null)
             return;
-
+        // converts target position to screen space
         Vector3 screenPos = cam.WorldToScreenPoint(target.position);
-
-        bool isVisible =
-            screenPos.z > 0.01f &&
-            screenPos.x >= 0 && screenPos.x <= cam.pixelWidth &&
-            screenPos.y >= 0 && screenPos.y <= cam.pixelHeight;
+        // checks if target is inside camera view
+        bool isVisible = screenPos.z > 0.01f && screenPos.x >= 0 && screenPos.x <= cam.pixelWidth && screenPos.y >= 0 && screenPos.y <= cam.pixelHeight;
 
         if (hideWhenOffscreen)
             SetVisible(isVisible);
-
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            canvas.transform as RectTransform,
-            screenPos,
-            cam,
-            out targetAnchoredPos
-        );
-
+        // converts screen position to canvas local position
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform, screenPos, cam, out targetAnchoredPos);
+        // applies instant or smooth movement
         if (!smoothMovement)
         {
             rect.anchoredPosition = targetAnchoredPos;
@@ -85,18 +80,12 @@ public class WaypointMarker : MonoBehaviour
         }
         else
         {
-            currentAnchoredPos = Vector2.Lerp(
-                rect.anchoredPosition,
-                targetAnchoredPos,
-                Time.deltaTime * smoothSpeed
-            );
-
+            currentAnchoredPos = Vector2.Lerp(rect.anchoredPosition, targetAnchoredPos, Time.deltaTime * smoothSpeed);
             rect.anchoredPosition = currentAnchoredPos;
         }
     }
 
-
-    private void SetVisible(bool visible)
+    private void SetVisible(bool visible) // enables or disables marker ui
     {
         if (label != null)
             label.enabled = visible;
@@ -105,22 +94,22 @@ public class WaypointMarker : MonoBehaviour
     }
 
 
-    private void ApplyLabelText()
+    private void ApplyLabelText() // updates marker label text
     {
         if (label != null)
             label.text = labelText;
     }
-    public void SetTarget(Transform newTarget) => target = newTarget;
+    public void SetTarget(Transform newTarget) => target = newTarget; // assigns a new target to follow
 
-    public void SetText(string text)
+    public void SetText(string text) // sets marker text at runtime
     {
         labelText = text;
         ApplyLabelText();
     }
-    public void clickMarker()
+    public void clickMarker()  // called when marker is clicked - show object information from json dictionary
     {
         infoPanelTitle.text = labelText;
-        if (sm.data.TryGetValue(jsonKey, out string value))
+        if (sm.data.TryGetValue(jsonKey, out string value)) // loads text from dictionary made from json and shows panel
         {
             infoPanelText.text = value;
             infoPanel.SetActive(true);

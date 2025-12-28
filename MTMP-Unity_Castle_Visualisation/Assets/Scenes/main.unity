@@ -330,7 +330,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Back
+  m_Text: Back to main castle parts
 --- !u!222 &10623897
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6293,7 +6293,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -20, y: -0.000061035156}
+  m_AnchoredPosition: {x: -20, y: 0}
   m_SizeDelta: {x: 115.3168, y: 871.0438}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &274357177
@@ -9665,6 +9665,7 @@ GameObject:
   - component: {fileID: 415372062}
   - component: {fileID: 415372064}
   - component: {fileID: 415372065}
+  - component: {fileID: 415372066}
   m_Layer: 0
   m_Name: SceneManager
   m_TagString: Untagged
@@ -9731,9 +9732,102 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 061f129b7a0a8494e828cc9c8906c499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ship1Object: {fileID: 0}
-  rotationSpeed: 20
-  ship2Object: {fileID: 0}
+--- !u!82 &415372066
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 415372061}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: d9544df379cbbaf46ad61885fd078234, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &416828663
 GameObject:
   m_ObjectHideFlags: 0
@@ -22671,11 +22765,6 @@ MonoBehaviour:
   smoothing: 10
   mouseUpSpeed: 1
   rotationSpeed: 3
-  moveToSpeed: 50
-  rotateToSpeed: 250
-  targetControlElements: []
-  lockButton: {fileID: 1910848368}
-  unlockButton: {fileID: 965915794}
   defaultFOV: 60
   cameraOffset: {x: 0, y: 5, z: 10}
 --- !u!114 &963194230
@@ -34610,7 +34699,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Back
+  m_Text: Back to main castle parts
 --- !u!222 &1422388389
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -40890,7 +40979,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Back
+  m_Text: Back to main castle parts
 --- !u!222 &1727928286
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -41271,7 +41360,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Back
+  m_Text: Back to main castle parts
 --- !u!222 &1747371728
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -48277,7 +48366,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Back
+  m_Text: Back to main castle parts
 --- !u!222 &2000399813
 CanvasRenderer:
   m_ObjectHideFlags: 0
